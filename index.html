@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus Navigation - Karpagam Academy of Higher Education (KAHE)</title>
+    <meta name="description" content="Official Smart Campus Navigation & Student Assistant UI for Karpagam Academy of Higher Education (KAHE), Coimbatore, India.">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- TOP NAVIGATION BAR (Visible after login) -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top" id="mainHeaderNav" style="display: none;">
+        <div class="container-fluid">
+            <a class="navbar-brand-custom" href="#" data-view="dashboardView">
+                <div class="college-logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <div class="lh-1" style="font-size: 1.1rem; color: #1565C0;">KAHE Smart Campus</div>
+                    <small class="text-muted fw-normal" style="font-size: 0.72rem;">Karpagam Academy of Higher Education</small>
+                </div>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-1 align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link-custom active" href="#" data-view="dashboardView"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom" href="#" data-view="mapView"><i class="fa-solid fa-map-location-dot"></i> Campus Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom" href="#" data-view="classroomView"><i class="fa-solid fa-door-open"></i> Classrooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom" href="#" data-view="facultyView"><i class="fa-solid fa-user-tie"></i> Faculty</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom" href="#" data-view="eventsView"><i class="fa-solid fa-calendar-days"></i> Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom text-danger" href="#" data-view="emergencyView"><i class="fa-solid fa-triangle-exclamation"></i> Emergency SOS</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <button class="btn btn-sm btn-outline-primary rounded-circle" style="width:38px; height:38px;" data-bs-toggle="modal" data-bs-target="#notificationsModal" title="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom p-1 ms-lg-1" href="#" data-view="profileView">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Profile" class="rounded-circle border" style="width:36px; height:36px; object-fit:cover;">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow-1">
+
+        <!-- 1. LANDING / LOGIN PAGE VIEW -->
+        <section id="loginView" class="app-view active">
+            <div class="login-wrapper">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="college-logo-icon mx-auto mb-3" style="width: 60px; height: 60px; font-size: 2rem;">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <h4 class="fw-bold mb-1">Smart Campus Navigation</h4>
+                        <p class="small opacity-75 mb-0">Karpagam Academy of Higher Education (KAHE)</p>
+                        <small class="text-white-50">Coimbatore, Tamil Nadu, India</small>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Login Tabs -->
+                        <ul class="nav nav-pills login-nav-tabs nav-fill" id="loginTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#student-login-pane" type="button" role="tab">Student Login</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="faculty-tab" data-bs-toggle="tab" data-bs-target="#faculty-login-pane" type="button" role="tab">Faculty Login</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="guest-tab" data-bs-toggle="tab" data-bs-target="#guest-login-pane" type="button" role="tab">Guest Access</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="loginTabsContent">
+                            <!-- Student Login Pane -->
+                            <div class="tab-pane fade show active" id="student-login-pane" role="tabpanel">
+                                <form onsubmit="event.preventDefault(); handleLogin('Student');">
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted small fw-semibold">College Email ID</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light text-primary"><i class="fa-solid fa-envelope"></i></span>
+                                            <input type="email" class="form-control form-control-custom" id="studentEmail" value="moulivishnu.21ubce045@kahe.ac.in" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted small fw-semibold">Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light text-primary"><i class="fa-solid fa-lock"></i></span>
+                                            <input type="password" class="form-control form-control-custom" value="••••••••" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="rememberStudent" checked>
+                                            <label class="form-check-label small text-muted" for="rememberStudent">Remember Me</label>
+                                        </div>
+                                        <a href="#" class="small text-primary text-decoration-none fw-medium" onclick="alert('Password reset link sent to your KAHE email.')">Forgot Password?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary-custom">
+                                        <i class="fa-solid fa-right-to-bracket me-2"></i> Student Login
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Faculty Login Pane -->
+                            <div class="tab-pane fade" id="faculty-login-pane" role="tabpanel">
+                                <form onsubmit="event.preventDefault(); handleLogin('Faculty');">
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted small fw-semibold">Faculty Email ID</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light text-primary"><i class="fa-solid fa-user-shield"></i></span>
+                                            <input type="email" class="form-control form-control-custom" id="facultyEmail" value="sundararajan.r@kahe.ac.in" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted small fw-semibold">Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light text-primary"><i class="fa-solid fa-key"></i></span>
+                                            <input type="password" class="form-control form-control-custom" value="••••••••" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="rememberFaculty" checked>
+                                            <label class="form-check-label small text-muted" for="rememberFaculty">Remember Me</label>
+                                        </div>
+                                        <a href="#" class="small text-primary text-decoration-none fw-medium" onclick="alert('Password reset link sent to your faculty portal.')">Forgot Password?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary-custom">
+                                        <i class="fa-solid fa-user-check me-2"></i> Faculty Login
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Guest Access Pane -->
+                            <div class="tab-pane fade text-center py-3" id="guest-login-pane" role="tabpanel">
+                                <div class="mb-3 text-muted small">
+                                    Visitors, parents, and seminar guests can explore campus blocks, classrooms, library, and emergency assistance without logging in.
+                                </div>
+                                <button type="button" class="btn btn-outline-custom" onclick="handleLogin('Guest')">
+                                    <i class="fa-solid fa-compass me-2"></i> Continue as Guest
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DASHBOARD VIEW -->
+        <section id="dashboardView" class="app-view">
+            <div class="container py-4">
+                <!-- Welcome Card -->
+                <div class="welcome-card mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <span class="badge bg-white text-primary mb-2 fw-semibold user-role-badge">Student</span>
+                            <h2 class="fw-bold mb-1">Welcome back, <span class="user-name-text">Mouli Vishnu R</span>!</h2>
+                            <p class="mb-0 opacity-90"><i class="fa-solid fa-location-dot me-1"></i> Current Campus Zone: <strong>Main Gate Entrance</strong></p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <button class="btn btn-light text-primary fw-semibold px-3 py-2 rounded-3 shadow-sm" onclick="switchView('mapView')">
+                                <i class="fa-solid fa-street-view me-1"></i> Open Live Map
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Global Search Bar -->
+                <div class="search-bar-container">
+                    <i class="fa-solid fa-magnifying-glass search-icon-inside"></i>
+                    <input type="text" class="search-input-main" placeholder="Search classrooms, labs, faculty, departments..." onkeyup="if(event.key === 'Enter') handleGlobalSearch(this.value)">
+                </div>
+
+                <!-- Quick Access Grid Header -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-cubes me-2 text-primary"></i> Quick Navigation Services</h5>
+                    <span class="text-muted small">10 Campus Services</span>
+                </div>
+
+                <!-- Quick Access Cards -->
+                <div class="quick-access-grid mb-5">
+                    <a href="#" class="qa-card" onclick="switchView('mapView')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h6 class="qa-title">Campus Map</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="switchView('classroomView')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-door-open"></i></div>
+                        <h6 class="qa-title">Find Classroom</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="switchView('facultyView')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-user-tie"></i></div>
+                        <h6 class="qa-title">Faculty Directory</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="navigateToBlock('block_a')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-building"></i></div>
+                        <h6 class="qa-title">Department Blocks</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="navigateToBlock('library')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <h6 class="qa-title">Library</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="navigateToBlock('canteen')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-utensils"></i></div>
+                        <h6 class="qa-title">Canteen</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="navigateToBlock('hostel_b')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-hotel"></i></div>
+                        <h6 class="qa-title">Hostel</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="navigateToBlock('parking')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-square-parking"></i></div>
+                        <h6 class="qa-title">Parking</h6>
+                    </a>
+                    <a href="#" class="qa-card" onclick="switchView('eventsView')">
+                        <div class="qa-icon-wrapper"><i class="fa-solid fa-calendar-star"></i></div>
+                        <h6 class="qa-title">Events</h6>
+                    </a>
+                    <a href="#" class="qa-card text-danger border-danger-subtle" onclick="switchView('emergencyView')">
+                        <div class="qa-icon-wrapper bg-danger-subtle text-danger"><i class="fa-solid fa-phone-volume"></i></div>
+                        <h6 class="qa-title text-danger">Emergency Contacts</h6>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CAMPUS MAP VIEW -->
+        <section id="mapView" class="app-view">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-map me-2"></i> Interactive Campus Navigation Map</h4>
+                        <small class="text-muted">Karpagam Academy of Higher Education Campus Layout</small>
+                    </div>
+                </div>
+
+                <div class="map-container-card mb-4">
+                    <div class="map-view-canvas" id="mapCanvasContainer">
+                        <img src="assets/images/campus_map.jpg" alt="KAHE Campus Map" class="map-bg-img">
+                        <canvas id="routeCanvas" class="map-canvas-layer"></canvas>
+                        <div id="mapMarkersLayer"></div>
+
+                        <!-- Top Destination Controls -->
+                        <div class="map-overlay-controls">
+                            <div class="row g-2">
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white text-danger"><i class="fa-solid fa-location-crosshairs"></i></span>
+                                        <select class="form-select form-control-custom" id="mapDestSelect" onchange="navigateToBlock(this.value)">
+                                            <option value="">Select Destination Block / Facility...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex gap-2">
+                                    <button class="btn btn-primary-custom btn-sm flex-fill" onclick="drawCampusMap()">
+                                        <i class="fa-solid fa-rotate-right"></i> Refresh Route
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Route Info Banner -->
+                        <div class="map-info-banner" id="routeInfoBanner">
+                            <div>
+                                <span class="badge badge-primary-soft me-2"><i class="fa-solid fa-location-dot"></i> Ready</span>
+                                <strong>Select a destination above</strong> to compute shortest walking path.
+                            </div>
+                            <span class="small opacity-75"><i class="fa-solid fa-person-walking me-1"></i> GPS Live Mode</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FACULTY SEARCH VIEW -->
+        <section id="facultyView" class="app-view">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-user-tie me-2"></i> Faculty Directory</h4>
+                        <small class="text-muted">Find professors, office room numbers, and consultation hours</small>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="input-group shadow-sm">
+                        <span class="input-group-text bg-white text-primary"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" class="form-control form-control-custom" id="facultySearchInput" placeholder="Search by faculty name, department, or office room...">
+                    </div>
+                </div>
+
+                <div class="row g-3" id="facultyGridContainer">
+                    <!-- Faculty Cards dynamically rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CLASSROOM FINDER VIEW -->
+        <section id="classroomView" class="app-view">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-door-open me-2"></i> Classroom & Lab Finder</h4>
+                        <small class="text-muted">Locate lecture halls, computer labs, and smart seminar rooms</small>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="input-group shadow-sm">
+                        <span class="input-group-text bg-white text-primary"><i class="fa-solid fa-building-user"></i></span>
+                        <input type="text" class="form-control form-control-custom" id="classroomSearchInput" placeholder="Search room code (e.g. A-102, B-302, CS Lab)...">
+                    </div>
+                </div>
+
+                <div class="row g-3" id="classroomGridContainer">
+                    <!-- Classroom Cards dynamically rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. EVENTS VIEW -->
+        <section id="eventsView" class="app-view">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-calendar-days me-2"></i> Upcoming Campus Events</h4>
+                        <small class="text-muted">Seminars, workshops, placements, and cultural festivals</small>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 overflow-x-auto pb-2 mb-4">
+                    <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="renderEvents('All')">All Events</button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="renderEvents('Seminars')">Seminars</button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="renderEvents('Workshops')">Workshops</button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="renderEvents('Placements')">Placements</button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="renderEvents('Cultural')">Cultural</button>
+                </div>
+
+                <div class="row g-3" id="eventsGridContainer">
+                    <!-- Events Cards dynamically rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. EMERGENCY SOS VIEW -->
+        <section id="emergencyView" class="app-view">
+            <div class="container py-4">
+                <div class="sos-banner-card mb-4">
+                    <h3 class="fw-bold mb-1">EMERGENCY ASSISTANCE</h3>
+                    <p class="small opacity-90 mb-3">Press SOS button for immediate medical or security dispatch to your live location.</p>
+                    <div class="btn-sos" onclick="triggerSOS()">
+                        SOS
+                    </div>
+                    <span class="badge bg-white text-danger fw-semibold px-3 py-2"><i class="fa-solid fa-shield-halved me-1"></i> KAHE 24x7 Security Command Desk</span>
+                </div>
+
+                <h5 class="fw-bold mb-3"><i class="fa-solid fa-phone-volume me-2 text-danger"></i> Key Emergency Contacts</h5>
+                <div class="row g-3">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-card text-center">
+                            <div class="qa-icon-wrapper mx-auto mb-2 bg-danger-subtle text-danger"><i class="fa-solid fa-user-doctor"></i></div>
+                            <h6 class="fw-bold mb-1">Medical Centre</h6>
+                            <p class="text-muted small mb-2">Campus Health Centre & Ambulance</p>
+                            <a href="tel:+914222980001" class="btn btn-outline-danger btn-sm w-100"><i class="fa-solid fa-phone me-1"></i> Ext: 101 / +91 422 2980001</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-card text-center">
+                            <div class="qa-icon-wrapper mx-auto mb-2 bg-primary-subtle text-primary"><i class="fa-solid fa-building-shield"></i></div>
+                            <h6 class="fw-bold mb-1">Security Office</h6>
+                            <p class="text-muted small mb-2">Main Gate Patrol Desk</p>
+                            <a href="tel:+914222980002" class="btn btn-outline-primary btn-sm w-100"><i class="fa-solid fa-phone me-1"></i> Ext: 100 / +91 422 2980002</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-card text-center">
+                            <div class="qa-icon-wrapper mx-auto mb-2 bg-warning-subtle text-warning"><i class="fa-solid fa-fire-extinguisher"></i></div>
+                            <h6 class="fw-bold mb-1">Fire & Safety</h6>
+                            <p class="text-muted small mb-2">Campus Safety Department</p>
+                            <a href="tel:+914222980003" class="btn btn-outline-warning btn-sm w-100"><i class="fa-solid fa-phone me-1"></i> Ext: 102 / +91 422 2980003</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-card text-center">
+                            <div class="qa-icon-wrapper mx-auto mb-2 bg-success-subtle text-success"><i class="fa-solid fa-hands-holding-child"></i></div>
+                            <h6 class="fw-bold mb-1">Women Safety Desk</h6>
+                            <p class="text-muted small mb-2">24/7 Helpline Cell</p>
+                            <a href="tel:1091" class="btn btn-outline-success btn-sm w-100"><i class="fa-solid fa-phone me-1"></i> Toll Free: 1091</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. PROFILE VIEW -->
+        <section id="profileView" class="app-view">
+            <div class="container py-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="info-card text-center">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Profile Photo" class="faculty-avatar mx-auto mb-3" style="width: 100px; height: 100px;">
+                            <h4 class="fw-bold mb-1 user-name-text">Mouli Vishnu R</h4>
+                            <span class="badge badge-primary-soft mb-3 user-role-badge">Student</span>
+
+                            <div class="text-start bg-light p-3 rounded-3 mb-4">
+                                <div class="row g-2 small">
+                                    <div class="col-6"><strong>Reg / Emp ID:</strong> <span class="user-reg-text">21UBCE045</span></div>
+                                    <div class="col-6"><strong>Year / Level:</strong> 3rd Year B.E.</div>
+                                    <div class="col-12"><strong>Department:</strong> Computer Science & Engg</div>
+                                    <div class="col-12"><strong>Email ID:</strong> <span class="user-email-text">moulivishnu.21ubce045@kahe.ac.in</span></div>
+                                    <div class="col-12"><strong>Institution:</strong> Karpagam Academy of Higher Education</div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-danger" onclick="handleLogout()">
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i> Logout Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav" style="display: none;">
+        <a href="#" class="bottom-nav-item active" data-view="dashboardView">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="mapView">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <span>Map</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="classroomView">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+            <i class="fa-regular fa-bell"></i>
+            <span>Notifs</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="profileView">
+            <i class="fa-regular fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer" style="z-index: 1090;"></div>
+
+    <!-- FLOOR PLAN MODAL -->
+    <div class="modal fade" id="floorPlanModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="floorPlanModalTitle">Block Floor Layout Navigator</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="floorPlanModalBody">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOS ALERT MODAL -->
+    <div class="modal fade" id="sosAlertModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow-lg text-center p-4">
+                <div class="text-danger display-1 mb-2"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h4 class="fw-bold text-danger">SOS EMERGENCY DISPATCHED</h4>
+                <p class="text-muted">Your live GPS coordinates (Lat: 10.8791, Long: 76.9802) have been broadcasted to KAHE Campus Security Control Room.</p>
+                <div class="bg-light p-3 rounded-3 mb-3 small text-start">
+                    <div><i class="fa-solid fa-check text-success me-2"></i> Security Patrol Unit: En Route (ETA 2 mins)</div>
+                    <div><i class="fa-solid fa-check text-success me-2"></i> Medical Response: Standby</div>
+                </div>
+                <button type="button" class="btn btn-danger btn-lg w-100 rounded-3" data-bs-dismiss="modal">Acknowledge</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATIONS MODAL -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold"><i class="fa-regular fa-bell me-2"></i> Campus Notifications</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item p-3 border-0 rounded-3 mb-2 bg-light">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-primary small">Exams Controller</strong>
+                                <small class="text-muted">10 mins ago</small>
+                            </div>
+                            <p class="mb-0 small fw-medium">Semester III Practical Exam venue moved to Block B Computer Lab 3.</p>
+                        </div>
+                        <div class="list-group-item p-3 border-0 rounded-3 mb-2 bg-light">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-success small">Library Cell</strong>
+                                <small class="text-muted">2 hours ago</small>
+                            </div>
+                            <p class="mb-0 small fw-medium">Book 'Data Structures & Algorithms' due in 2 days.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- App JS -->
+    <script src="js/app.js"></script>
+    <script>
+        // Update header & bottom nav visibility on view change
+        const origSwitch = window.switchView;
+        window.switchView = function(viewId) {
+            origSwitch(viewId);
+            const nav = document.getElementById('mainHeaderNav');
+            const bNav = document.getElementById('mobileBottomNav');
+            if (viewId === 'loginView') {
+                if (nav) nav.style.display = 'none';
+                if (bNav) bNav.style.display = 'none';
+            } else {
+                if (nav) nav.style.display = 'flex';
+                if (bNav) bNav.style.display = 'flex';
+            }
+        };
+    </script>
+</body>
+</html>
